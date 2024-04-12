@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, Button, TextInput } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import {myPlant} from "../classes/myplants"
+import PlantContext from '../context/plantscontext';
 
 const IMAGE_SIZE = 200;
 
@@ -10,7 +11,7 @@ export default function NewPlants() {
     const [plantName, setPlantName] = useState("");
     const [description, setDescription] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [plantList, setPlantList] = useState<myPlant[]>([]);
+    const { plantList, setPlantList } = useContext(PlantContext);
 
     const selectImage = async () => {
         try {
@@ -41,7 +42,7 @@ export default function NewPlants() {
 
     return (
         <View>
-            <Text> Plant Name </Text>
+            <Text> Plant Name New Tada</Text>
             <TextInput onChangeText={setPlantName} value={plantName} />
             <Text> Plant Description </Text>
             <TextInput onChangeText={setDescription} value={description} />
@@ -49,7 +50,7 @@ export default function NewPlants() {
             {image && <Image source={{ uri: image }} style={{ width: IMAGE_SIZE, height: IMAGE_SIZE }} />}
             <Button title="Add Plant" onPress={addPlant} />
             <Text> {errorMessage}</Text>
-            {plantList[0] && <Text> {plantList[0].getName()} </Text>}   
+            {plantList && plantList.length > 0 && <Text> {plantList[plantList.length - 1].getName()} </Text>}   
         </View>
-    );
+    );  
 }
