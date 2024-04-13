@@ -7,6 +7,7 @@ import NewPlants from './pages/newplant';
 import PlantList from './pages/myplants';
 import { myPlant } from './classes/myplants';
 import PlantContext from './context/plantscontext';
+import PlantSearch from './pages/searchscreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="MyPlants" component={PlantList} />
           <Tab.Screen name="NewPlant" component={NewPlants} />
+          <Tab.Screen name="Search" component={PlantSearch} />
         </Tab.Navigator>
       </NavigationContainer>
     </PlantContext.Provider>
