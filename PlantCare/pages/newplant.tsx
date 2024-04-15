@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, Image, Button, TextInput } from "react-native";
+import { View, Text, Image, TouchableOpacity, TextInput , StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import {myPlant} from "../classes/myplants"
 import PlantContext from '../context/plantscontext';
@@ -42,15 +42,40 @@ export default function NewPlants() {
 
     return (
         <View>
-            <Text> Plant Name New Tada</Text>
+            <Text>Plant Name</Text>
             <TextInput onChangeText={setPlantName} value={plantName} />
-            <Text> Plant Description </Text>
+            <Text>Plant Description</Text>
             <TextInput onChangeText={setDescription} value={description} />
-            <Button title="Select a plant picture" onPress={selectImage} />
-            {image && <Image source={{ uri: image }} style={{ width: IMAGE_SIZE, height: IMAGE_SIZE }} />}
-            <Button title="Add Plant" onPress={addPlant} />
+            <TouchableOpacity style={styles.TouchableOpacity}  onPress={selectImage} >
+            <Text style = {styles.Text}> Plant Image </Text>
+            </TouchableOpacity>
+            {!image &&<View style={{alignSelf :'center',  width: IMAGE_SIZE, height: IMAGE_SIZE, backgroundColor: "lightgray" }}></View>}
+            {image && <Image source={{ uri: image }} style={{alignSelf :'center', width: IMAGE_SIZE, height: IMAGE_SIZE }} />}
+            <TouchableOpacity style = {styles.TouchableOpacity}  onPress={addPlant} >
+            <Text style = {styles.Text}>Add Plant</Text>
+            </TouchableOpacity>
             <Text> {errorMessage}</Text>
-            {plantList && plantList.length > 0 && <Text> {plantList[plantList.length - 1].getName()} </Text>}   
         </View>
     );  
 }
+
+
+const styles = StyleSheet.create({ 
+    TouchableOpacity: {
+        backgroundColor: "rgba(42, 171, 132, 1)",
+        color: "black",
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+        width: 300,
+        alignSelf: "center"
+        
+        
+    }, 
+    Text: { 
+        color: "white",
+        fontSize: 20,
+        textAlign: "center",
+        fontWeight: "bold",
+    }
+});
