@@ -21,7 +21,7 @@ export default function PlantSearch(){
         try {
             console.log(Config.PLANT_TOKEN)
             if (plantnamesearch) {
-                const response = await axios.get(`https://trefle.io/api/v1/plants/search?token=${Config.PLANT_TOKEN}&q=${plantnamesearch}`);
+                const response = await axios.get(`https://trefle.io/api/v1/plants/search?token=RxjASn1cp3rTZhHENP3J3h6I7mj8UBvdsYKuvdaaYCU&q=${plantnamesearch}`);
                 setSearchResults(response.data.data);
             }
         } catch (error) {
