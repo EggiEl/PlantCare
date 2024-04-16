@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         height: "33%", 
         borderColor: "black", 
         borderWidth : 1, 
-        backgroundColor : "green"
+        backgroundColor : "black"
     }, 
     imagestyle : {
         width : "100%", 

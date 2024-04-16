@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, FlatList, Image, Modal , TouchableOpacity } from "react-native";
+import { View, Text, Button, TextInput, Modal , TouchableOpacity, StyleSheet, Image, ActivityIndicator } from "react-native";
+import SharedFlatList from '../components/listElements';
 
 import Config from 'react-native-config';
 
@@ -16,40 +17,39 @@ export default function PlantSearch(){
     const [searchResults, setSearchResults] = useState<PlantItem[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalImage, setModalImage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const searchPlant = async () => {
+        setIsLoading(true);
         try {
-            console.log(Config.PLANT_TOKEN)
             if (plantnamesearch) {
-                const response = await axios.get(`https://trefle.io/api/v1/plants/search?token=RxjASn1cp3rTZhHENP3J3h6I7mj8UBvdsYKuvdaaYCU&q=${plantnamesearch}`);
-                setSearchResults(response.data.data);
+                const response = await axios.get(`https://trefle.io/api/v1/plants/search?token=${Config.PLANT_TOKEN}&q=${plantnamesearch}`);
+                setSearchResults(response.data.data || []);
             }
         } catch (error) {
             console.error(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     return (
-        <View>
-            <Text> Pflanzensuche</Text>
-            <TextInput onChangeText={setPlantNameSearch} value={plantnamesearch} />
+        <View style={styles.container}>
+            <Text style={styles.title}> Pflanzensuche</Text>
+            <TextInput style={styles.input} onChangeText={setPlantNameSearch} value={plantnamesearch} />
             <Button title="Pflanze suchen" onPress={searchPlant} />
-            <FlatList
-                data={searchResults}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <View>
-                        <Text>{item.common_name}</Text>
-                        <Text>{item.scientific_name}</Text>
-                        <TouchableOpacity onPress={() => {setModalVisible(true); setModalImage(item.image_url)}}>
-                            <Image 
-                                source={{uri: item.image_url}} 
-                                style={{width: 100, height: 100}} 
-                            />
-                        </TouchableOpacity>
-                    </View>
-                )}
-            />
+            {isLoading ? <ActivityIndicator size="large" color="#0000ff" /> : (
+                <SharedFlatList 
+                    data={searchResults.map(item => ({
+                        id: item.id,
+                        name: item.common_name,
+                        description: item.scientific_name,
+                        image_url: item.image_url
+                    }))}
+                    setModalVisible={setModalVisible}
+                    setModalImage={setModalImage}
+                />
+            )}
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -58,12 +58,41 @@ export default function PlantSearch(){
                     setModalVisible(!modalVisible);
                 }}
             >
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={styles.modalView}>
                     <TouchableOpacity onPress={() => setModalVisible(false)}>
-                        {modalImage && <Image source={{uri: modalImage}} style={{width: 300, height: 300}} />}
+                        {modalImage ? <Image source={{uri: modalImage}} style={styles.modalImage} /> : <Text>No Image Available</Text>}
                     </TouchableOpacity>
                 </View>
             </Modal>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#fff',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 20,
+    },
+    modalView: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    modalImage: {
+        width: 300, 
+        height: 300
+    }
+});
