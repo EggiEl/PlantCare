@@ -1,18 +1,9 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
+import { ListProps } from  '../types/listElementTypes';
 
-type ListItem = {
-    id: number;
-    name: string;
-    description: string;
-    image_url: string;
-};
 
-type ListProps = {
-    data: ListItem[];
-    setModalVisible?: (visible: boolean) => void;
-    setModalImage?: (imageUrl: string | null) => void;
-};
+
 
 const SharedFlatList: React.FC<ListProps> = ({ data, setModalVisible, setModalImage }) => {
     return (

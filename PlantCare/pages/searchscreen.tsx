@@ -4,13 +4,7 @@ import { View, Text, Button, TextInput, Modal , TouchableOpacity, StyleSheet, Im
 import SharedFlatList from '../components/listElements';
 
 import Config from 'react-native-config';
-
-type PlantItem = {
-    id: number;
-    common_name: string;
-    scientific_name: string;
-    image_url: string;
-};
+import { PlantItem } from '../types/plantItem';
 
 export default function PlantSearch(){
     const [plantnamesearch, setPlantNameSearch] = useState("");
