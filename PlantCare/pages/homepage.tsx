@@ -15,6 +15,8 @@ export default function HomeScreen() {
         <View style = {styles.container}>
             <View style = {styles.textcontainer}>
             <Text style = {styles.textstyle}> Welcome to PlantCare </Text>
+            <Text style = {styles.textstyle1}> Keep track of watering schedules and care routines for your plants </Text>
+
             </View>
            
 
@@ -42,6 +44,14 @@ const styles = StyleSheet.create({
         fontWeight : "bold", 
         color :"white" , 
         fontSize: 60,
+        textAlign:"center", 
+        
+    },
+    textstyle1 : {
+        marginTop: 20, 
+        fontWeight : "bold", 
+        color :"white" , 
+        fontSize: 20,
         textAlign:"center", 
         
     },
