@@ -4,10 +4,8 @@ import PlantContext from '../context/plantscontext';
 import { myPlant } from '../classes/myplants';
 
 export default function PlantList() {
-    const { plantList } = useContext<{
-        plantList: myPlant[];
-        setPlantList: React.Dispatch<React.SetStateAction<myPlant[]>>;
-    }>(PlantContext);
+    const { plantList, setPlantList } = useContext(PlantContext);
+
 
     const renderItem = ({ item }: { item: myPlant }) => (
         <View style={styles.listElement}>
