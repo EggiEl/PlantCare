@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { View, Text, Button, TextInput, Modal , TouchableOpacity, StyleSheet, Image, ActivityIndicator } from "react-native";
 import SharedFlatList from '../components/listElements';
-
+import { PLANT_TOKEN } from '@env';
 import Config from 'react-native-config';
 import { PlantItem } from '../types/plantItem';
 
@@ -17,7 +17,7 @@ export default function PlantSearch(){
         setIsLoading(true);
         try {
             if (plantnamesearch) {
-                const response = await axios.get(`https://trefle.io/api/v1/plants/search?token=${Config.PLANT_TOKEN}&q=${plantnamesearch}`);
+                const response = await axios.get(`https://trefle.io/api/v1/plants/search?token=${PLANT_TOKEN}&q=${plantnamesearch}`);
                 setSearchResults(response.data.data || []);
             }
         } catch (error) {
@@ -90,3 +90,5 @@ const styles = StyleSheet.create({
         height: 300
     }
 });
+
+
