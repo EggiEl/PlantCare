@@ -19,7 +19,7 @@ export default function PlantList() {
 
     return (
         <View style={styles.container}>
-            {plantList && plantList[0] && <FlatList 
+            {plantList && plantList[0] && <FlatList  //Ich wollte hier die shared Plantlist nehmen, aber die Bilder konnten nicht angezeigt werden wenn ich sie übergebe, da sie wohl nicht als URI erkannt werden
                 data={plantList} 
                 renderItem={renderItem} 
                 keyExtractor={(item, index) => index.toString()} />}        
